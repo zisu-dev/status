@@ -1,7 +1,11 @@
 {
-  "name": "nuxt-vuetify",
+  "name": "status",
   "version": "1.0.0",
   "private": true,
+  "description": "zisu.dev status page",
+  "repository": "git@github.com:zisu-dev/status.git",
+  "author": "thezzisu <thezzisu@gmail.com>",
+  "license": "MIT",
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",

@@ -4,11 +4,18 @@
     <v-btn
       text
       x-large
-      class="text-none text-h5"
+      class="text-none pa-1"
       href="/"
       @click.stop.prevent="$router.push('/')"
     >
-      <code>SITE TITLE</code>
+      <div>
+        <div class="text-h6" style="line-height: unset">
+          <code>zisu.dev</code>
+        </div>
+        <div class="text-caption" style="line-height: unset">
+          <code>status</code>
+        </div>
+      </div>
     </v-btn>
     <v-spacer />
     <v-btn icon aria-label="settings" @click="settings = !settings">

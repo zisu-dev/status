@@ -1,1 +1,1 @@
-# nuxt-vuetify
+# zisu.dev status

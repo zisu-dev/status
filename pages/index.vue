@@ -4,7 +4,7 @@
       <v-col cols="12" sm="8" md="6">
         <v-card>
           <v-card-title class="headline">
-            Welcome to the Vuetify + Nuxt.js template
+            {{ data.status }}
           </v-card-title>
         </v-card>
       </v-col>
@@ -12,4 +12,13 @@
   </v-container>
 </template>
 
-<script></script>
+<script lang="ts">
+import Vue from 'vue'
+import { get } from 'vuex-pathify'
+export default Vue.extend({
+  name: 'Index',
+  computed: {
+    data: get('data')
+  }
+})
+</script>

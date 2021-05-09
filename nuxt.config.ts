@@ -18,8 +18,8 @@ const config: NuxtConfig = {
   target: 'static',
   modern: true,
   head: {
-    titleTemplate: '%s - nuxt-vuetify',
-    title: 'nuxt-vuetify',
+    titleTemplate: '%s - zisu.dev status',
+    title: 'zisu.dev status',
     htmlAttrs: {
       lang: 'en'
     },
@@ -62,7 +62,10 @@ const config: NuxtConfig = {
     '@nuxtjs/axios'
     //
   ],
-  axios: {},
+  axios: {
+    // baseURL: 'https://api.zisu.dev',
+    baseURL: 'http://localhost:8085'
+  },
   vuetify: {
     customVariables: ['~/styles/variables.scss'],
     treeShake: true,

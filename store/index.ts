@@ -10,7 +10,8 @@ export const state = () => ({
   drawers: {
     main: false,
     settings: false
-  }
+  },
+  data: {}
 })
 
 type RootState = ReturnType<typeof state>
@@ -25,8 +26,9 @@ export const mutations: MutationTree<RootState> = {
 
 export const actions: ActionTree<RootState, RootState> = {
   ...make.actions(state),
-  async nuxtInit(_store, _ctx: Context) {
-    //
+  async nuxtInit(_store, ctx: Context) {
+    const data = await ctx.$axios.$get('/status/')
+    this.set('data', data)
   }
 }
 
