@@ -63,8 +63,7 @@ const config: NuxtConfig = {
     //
   ],
   axios: {
-    // baseURL: 'https://api.zisu.dev',
-    baseURL: 'http://localhost:8085'
+    baseURL: 'https://api.zisu.dev'
   },
   vuetify: {
     customVariables: ['~/styles/variables.scss'],

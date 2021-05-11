@@ -20,7 +20,9 @@
     <v-list-group v-for="group of groups" :key="group.name">
       <template #activator>
         <v-list-item-avatar tile size="24">
-          <v-icon>{{ icons[group.name] || icons.default }}</v-icon>
+          <v-icon :color="colors[group.status]">
+            {{ icons[group.name] || icons.default }}
+          </v-icon>
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title class="text-monospace">
@@ -28,9 +30,15 @@
           </v-list-item-title>
         </v-list-item-content>
       </template>
-      <v-list-item v-for="monitor of group.monitors" :key="monitor.monitorId">
+      <v-list-item
+        v-for="monitor of group.monitors"
+        :key="monitor.monitorId"
+        :to="'/' + monitor.id"
+      >
         <v-list-item-avatar tile size="24">
-          <v-icon>{{ icons[monitor.type] || icons.default }}</v-icon>
+          <v-icon :color="colors[monitor.status]">
+            {{ icons[monitor.type] || icons.default }}
+          </v-icon>
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title class="text-monospace" v-text="monitor.name" />
@@ -66,17 +74,22 @@ export default Vue.extend({
         Ping: mdiRecordCircleOutline,
         'HTTP(s)': mdiCursorDefault,
         default: mdiEye
+      },
+      colors: {
+        up: 'success',
+        degraded: 'warning',
+        down: 'error',
+        paused: ''
       }
     }
   },
   computed: {
     data: sync<any>('data'),
     groups() {
-      const obj = this.data.psp.monitors
+      const obj = this.data.monitors
         .map((x: any) => {
           const [group, name] = x.name.split('::')
-          const { monitorId, statusClass, type } = x
-          return { id: monitorId, group, name, status: statusClass, type }
+          return { ...x, group, name }
         })
         .reduce(
           (acc: any, cur: any) => ({
@@ -85,7 +98,16 @@ export default Vue.extend({
           }),
           {}
         )
-      return Object.keys(obj).map((K) => ({ name: K, monitors: obj[K] }))
+      return Object.keys(obj)
+        .map((K) => ({ name: K, monitors: obj[K] }))
+        .map((x) => ({
+          ...x,
+          status: (() => {
+            const a = x.monitors.some((x: any) => x.status === 'up')
+            const b = x.monitors.some((x: any) => x.status === 'down')
+            return a ? (b ? 'degraded' : 'up') : b ? 'down' : 'paused'
+          })()
+        }))
     }
   }
 })
