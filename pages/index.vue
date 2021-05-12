@@ -4,7 +4,7 @@
       <v-col cols="12" sm="8" md="6">
         <v-card>
           <v-card-title class="headline">
-            {{ data.status }}
+            {{ data }}
           </v-card-title>
         </v-card>
       </v-col>
@@ -14,11 +14,20 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { get } from 'vuex-pathify'
+import { sync } from 'vuex-pathify'
 export default Vue.extend({
   name: 'Index',
+  data: () => ({
+    data: {
+      global: {}
+    }
+  }),
+  async fetch() {
+    this.data = await this.$axios.$get('/status/list')
+    this.globalInfo = this.data.global
+  },
   computed: {
-    data: get('data')
+    globalInfo: sync<any>('globalInfo')
   }
 })
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app>
+  <v-app-bar app :color="colors[globalInfo.status]">
     <v-app-bar-nav-icon aria-label="menu" @click="main = !main" />
     <v-btn
       text
@@ -27,18 +27,23 @@
 <script lang="ts">
 import Vue from 'vue'
 import { mdiCog } from '@mdi/js'
-import { sync } from 'vuex-pathify'
+import { get, sync } from 'vuex-pathify'
 
 export default Vue.extend({
   name: 'App',
   data() {
     return {
+      colors: {
+        up: '#2ecc71c0',
+        down: '#e74c3cc0'
+      },
       mdiCog
     }
   },
   computed: {
     settings: sync('drawers@settings'),
-    main: sync('drawers@main')
+    main: sync('drawers@main'),
+    globalInfo: get('globalInfo')
   }
 })
 </script>

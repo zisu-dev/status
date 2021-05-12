@@ -8,15 +8,15 @@
         <v-list-item-title class="text-monospace">zisu.dev</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
-    <v-list-item v-for="(link, i) of links" :key="i" :to="link.to" nuxt>
+    <v-divider />
+    <v-list-item nuxt to="/">
       <v-list-item-avatar tile size="24">
-        <v-icon>{{ link.icon }}</v-icon>
+        <v-icon :color="colors[globalInfo.status]">{{ mdiHome }}</v-icon>
       </v-list-item-avatar>
       <v-list-item-content>
-        <v-list-item-title class="text-monospace" v-text="link.text" />
+        <v-list-item-title class="text-monospace">Overview</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
-    <v-divider />
     <v-list-group v-for="group of groups" :key="group.name">
       <template #activator>
         <v-list-item-avatar tile size="24">
@@ -34,6 +34,7 @@
         v-for="monitor of group.monitors"
         :key="monitor.monitorId"
         :to="'/' + monitor.id"
+        nuxt
       >
         <v-list-item-avatar tile size="24">
           <v-icon :color="colors[monitor.status]">
@@ -64,10 +65,6 @@ export default Vue.extend({
   name: 'AppNav',
   data() {
     return {
-      links: [
-        { to: '/', icon: mdiHome, text: 'Home' }
-        //
-      ],
       icons: {
         server: mdiServer,
         website: mdiWeb,
@@ -80,13 +77,14 @@ export default Vue.extend({
         degraded: 'warning',
         down: 'error',
         paused: ''
-      }
+      },
+      mdiHome
     }
   },
   computed: {
-    data: sync<any>('data'),
+    globalInfo: sync<any>('globalInfo'),
     groups() {
-      const obj = this.data.monitors
+      const obj = this.globalInfo.monitors
         .map((x: any) => {
           const [group, name] = x.name.split('::')
           return { ...x, group, name }

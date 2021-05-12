@@ -11,7 +11,9 @@ export const state = () => ({
     main: false,
     settings: false
   },
-  data: {}
+  globalInfo: {
+    monitors: []
+  }
 })
 
 type RootState = ReturnType<typeof state>
@@ -26,10 +28,7 @@ export const mutations: MutationTree<RootState> = {
 
 export const actions: ActionTree<RootState, RootState> = {
   ...make.actions(state),
-  async nuxtInit(_store, ctx: Context) {
-    const data = await ctx.$axios.$get('/status/list')
-    this.set('data', data)
-  }
+  async nuxtInit(_store, _ctx: Context) {}
 }
 
 export const plugins = [pathify.plugin]
