@@ -1,29 +1,24 @@
 <template>
-  <v-list nav dense>
-    <v-list-item href="https://zisu.dev/" target="_blank">
+  <v-list-group>
+    <template #activator>
       <v-list-item-avatar tile size="24">
-        <v-img :src="require('~/assets/logo.svg')" />
+        <v-icon :color="colors[group.status]">
+          {{ icons[group.name] || icons.default }}
+        </v-icon>
       </v-list-item-avatar>
       <v-list-item-content>
-        <v-list-item-title class="text-monospace">zisu.dev</v-list-item-title>
+        <v-list-item-title class="text-monospace">
+          {{ group.name }}
+        </v-list-item-title>
       </v-list-item-content>
-    </v-list-item>
-    <v-divider />
-    <v-list-item nuxt to="/">
-      <v-list-item-avatar tile size="24">
-        <v-icon :color="colors[globalInfo.status]">{{ mdiHome }}</v-icon>
-      </v-list-item-avatar>
-      <v-list-item-content>
-        <v-list-item-title class="text-monospace">Overview</v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
+    </template>
     <app-nav-monitor-group
-      v-for="subgroup of globalInfo.monitors.groups"
+      v-for="subgroup of group.groups"
       :key="subgroup.name"
       :group="subgroup"
     />
     <v-list-item
-      v-for="monitor of globalInfo.monitors.monitors"
+      v-for="monitor of group.monitors"
       :key="monitor.monitorId"
       :to="'/' + monitor.id"
       nuxt
@@ -37,7 +32,7 @@
         <v-list-item-title class="text-monospace" v-text="monitor.name" />
       </v-list-item-content>
     </v-list-item>
-  </v-list>
+  </v-list-group>
 </template>
 
 <script lang="ts">
@@ -45,15 +40,19 @@ import Vue from 'vue'
 import {
   mdiCursorDefault,
   mdiEye,
-  mdiHome,
   mdiRecordCircleOutline,
   mdiServer,
   mdiWeb
 } from '@mdi/js'
-import { sync } from 'vuex-pathify'
 
 export default Vue.extend({
-  name: 'AppNav',
+  name: 'AppNavMonitorGroup',
+  props: {
+    group: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
       icons: {
@@ -68,12 +67,8 @@ export default Vue.extend({
         degraded: 'warning',
         down: 'error',
         paused: ''
-      },
-      mdiHome
+      }
     }
-  },
-  computed: {
-    globalInfo: sync<any>('globalInfo')
   }
 })
 </script>
