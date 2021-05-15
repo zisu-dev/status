@@ -22,7 +22,9 @@
                   <code>{{ titles[data.monitor.status] }}</code>
                 </div>
                 <div class="text--secondary text-body-2">
-                  <code>now</code>
+                  <code>
+                    {{ new Date($fetchState.timestamp).toLocaleTimeString() }}
+                  </code>
                 </div>
               </div>
             </v-card-title>
@@ -90,12 +92,21 @@ export default Vue.extend({
       paused: mdiPause
     },
     booted: false,
+    fetchInterval: null as any,
     mdiArrowLeft
   }),
   async fetch() {
     this.data = await this.$axios.$get(`/status/${this.$route.params.id}`)
     this.$store.set('globalInfo', this.data.global)
     this.booted = true
+  },
+  mounted() {
+    this.fetchInterval = setInterval(() => {
+      this.$fetch()
+    }, 60 * 1000)
+    this.$once('hook:beforeDestroy', () => {
+      clearInterval(this.fetchInterval)
+    })
   }
 })
 </script>

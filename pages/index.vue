@@ -14,6 +14,11 @@
                 <div>
                   <code>{{ titles[info.status] }}</code>
                 </div>
+                <div class="text--secondary text-body-2">
+                  <code>
+                    {{ new Date($fetchState.timestamp).toLocaleTimeString() }}
+                  </code>
+                </div>
               </div>
             </v-card-title>
             <v-divider />
@@ -82,7 +87,8 @@ export default Vue.extend({
       down: mdiClose,
       paused: mdiPause
     },
-    booted: false
+    booted: false,
+    fetchInterval: null as any
   }),
   async fetch() {
     this.data = await this.$axios.$get('/status/list')
@@ -91,6 +97,14 @@ export default Vue.extend({
   },
   computed: {
     info: sync<any>('globalInfo')
+  },
+  mounted() {
+    this.fetchInterval = setInterval(() => {
+      this.$fetch()
+    }, 60 * 1000)
+    this.$once('hook:beforeDestroy', () => {
+      clearInterval(this.fetchInterval)
+    })
   }
 })
 </script>
