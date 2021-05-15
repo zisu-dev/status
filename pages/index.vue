@@ -20,54 +20,29 @@
             <v-card-text>
               <v-row>
                 <v-col cols="3">
-                  <div class="text-center text-monospace">
-                    <v-icon :color="colors[ratioClass(info.ratios.r1)]">
-                      {{ icons[ratioClass(info.ratios.r1)] }}
-                    </v-icon>
-                    <div>{{ formatRatio(info.ratios.r1) }}%</div>
-                    <div>
-                      <span>1d</span>
-                    </div>
-                  </div>
+                  <ratio-overview :ratio="info.ratios.r1" type="1d" />
                 </v-col>
                 <v-divider vertical />
                 <v-col cols="3">
-                  <div class="text-center text-monospace">
-                    <v-icon :color="colors[ratioClass(info.ratios.r7)]">
-                      {{ icons[ratioClass(info.ratios.r7)] }}
-                    </v-icon>
-                    <div>{{ formatRatio(info.ratios.r7) }}%</div>
-                    <div>
-                      <span>3d</span>
-                    </div>
-                  </div>
+                  <ratio-overview :ratio="info.ratios.r7" type="7d" />
                 </v-col>
                 <v-divider vertical />
                 <v-col cols="3">
-                  <div class="text-center text-monospace">
-                    <v-icon :color="colors[ratioClass(info.ratios.r30)]">
-                      {{ icons[ratioClass(info.ratios.r30)] }}
-                    </v-icon>
-                    <div>{{ formatRatio(info.ratios.r30) }}%</div>
-                    <div>
-                      <span>30d</span>
-                    </div>
-                  </div>
+                  <ratio-overview :ratio="info.ratios.r30" type="30d" />
                 </v-col>
                 <v-divider vertical />
                 <v-col cols="3">
-                  <div class="text-center text-monospace">
-                    <v-icon :color="colors[ratioClass(info.ratios.r90)]">
-                      {{ icons[ratioClass(info.ratios.r90)] }}
-                    </v-icon>
-                    <div>{{ formatRatio(info.ratios.r90) }}%</div>
-                    <div>
-                      <span>90d</span>
-                    </div>
-                  </div>
+                  <ratio-overview :ratio="info.ratios.r90" type="90d" />
                 </v-col>
               </v-row>
             </v-card-text>
+            <v-divider />
+            <template v-for="(monitor, i) of data.list">
+              <template v-if="i">
+                <v-divider :key="i" />
+              </template>
+              <monitor-summary :key="monitor.id" :data="monitor" />
+            </template>
           </v-card>
         </template>
         <template v-else>
@@ -79,21 +54,16 @@
 </template>
 
 <script lang="ts">
-import {
-  mdiAlert,
-  mdiCheck,
-  mdiCircle,
-  mdiCircleOutline,
-  mdiClose,
-  mdiPause
-} from '@mdi/js'
+import { mdiCheck, mdiCircleOutline, mdiClose, mdiPause } from '@mdi/js'
 import Vue from 'vue'
 import { sync } from 'vuex-pathify'
+
 export default Vue.extend({
   name: 'Index',
   data: () => ({
     data: {
-      global: {}
+      global: {},
+      list: []
     },
     titles: {
       up: 'All system operational',
@@ -104,23 +74,13 @@ export default Vue.extend({
     colors: {
       up: 'success',
       degraded: 'warning',
-      down: 'error',
-      0: 'success',
-      1: 'success',
-      2: 'warning',
-      3: 'warning',
-      4: 'error'
+      down: 'error'
     },
     icons: {
       up: mdiCheck,
       degraded: mdiCircleOutline,
       down: mdiClose,
-      paused: mdiPause,
-      0: mdiCheck,
-      1: mdiCircle,
-      2: mdiCircleOutline,
-      3: mdiAlert,
-      4: mdiClose
+      paused: mdiPause
     },
     booted: false
   }),
@@ -131,18 +91,6 @@ export default Vue.extend({
   },
   computed: {
     info: sync<any>('globalInfo')
-  },
-  methods: {
-    formatRatio(ratio: number) {
-      return (ratio / 1000).toFixed(3)
-    },
-    ratioClass(ratio: number) {
-      if (ratio === 100000) return 0
-      if (ratio >= 95000) return 1
-      if (ratio >= 90000) return 2
-      if (ratio >= 1000) return 3
-      return 4
-    }
   }
 })
 </script>

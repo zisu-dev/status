@@ -13,13 +13,17 @@ export const state = () => ({
   },
   globalInfo: {
     monitors: []
-  }
+  },
+  systemTheme: 2
 })
 
 type RootState = ReturnType<typeof state>
 
 export const getters: GetterTree<RootState, RootState> = {
-  ...make.getters(state)
+  ...make.getters(state),
+  theme(state) {
+    return state.local.theme || state.systemTheme
+  }
 }
 
 export const mutations: MutationTree<RootState> = {
