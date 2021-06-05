@@ -1,49 +1,35 @@
 <template>
-  <v-footer>
-    <v-container fluid>
-      <v-row justify="end">
-        <v-col>
-          <div class="text-right text-monospace text--white">
-            <div>
-              <template v-for="(badge, i) of badges">
-                <span :key="i">
-                  <v-icon>{{ badge.icon }}</v-icon>
-                  {{ badge.text }}
-                </span>
-              </template>
-            </div>
-            <div>&copy; {{ new Date().getFullYear() }} ZhangZisu</div>
-            <div>
-              Background Author:
-              <a href="https://www.pixiv.net/users/45482476">あをもみじ</a>
-            </div>
-          </div>
-        </v-col>
-      </v-row>
-    </v-container>
+  <v-footer app class="d-flex justify-end text-caption align-center">
+    <code>&copy; {{ new Date().getFullYear() }} ZhangZisu</code>
+    <v-divider vertical class="mx-2" />
+    <div class="text-monospace">
+      <v-icon size="16" color="success">{{ mdiCheck }}</v-icon>
+      {{ counts.up }}
+      <v-icon size="16" color="error">{{ mdiClose }}</v-icon>
+      {{ counts.down }}
+      <v-icon size="16">{{ mdiPause }}</v-icon>
+      {{ counts.paused }}
+    </div>
   </v-footer>
 </template>
 
 <script lang="ts">
+import { mdiCheck, mdiClose, mdiPause } from '@mdi/js'
 import Vue from 'vue'
-import { mdiCertificate, mdiCreativeCommons } from '@mdi/js'
+import { get } from 'vuex-pathify'
 
 export default Vue.extend({
   name: 'AppFooter',
   data() {
     return {
       build: BUILD,
-      badges: [
-        {
-          icon: mdiCertificate,
-          text: 'MIT'
-        },
-        {
-          icon: mdiCreativeCommons,
-          text: 'BY-SA'
-        }
-      ]
+      mdiCheck,
+      mdiClose,
+      mdiPause
     }
+  },
+  computed: {
+    counts: get('globalInfo@counts')
   }
 })
 </script>

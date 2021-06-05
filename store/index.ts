@@ -12,7 +12,12 @@ export const state = () => ({
     settings: false
   },
   globalInfo: {
-    monitors: []
+    monitors: [],
+    counts: {
+      up: '?',
+      down: '?',
+      paused: '?'
+    }
   },
   systemTheme: 2
 })

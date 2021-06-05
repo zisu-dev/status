@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app :color="colors[globalInfo.status]">
+  <v-app-bar app :color="colors[status]">
     <v-app-bar-nav-icon aria-label="menu" @click="main = !main" />
     <v-btn
       text
@@ -18,6 +18,14 @@
       </div>
     </v-btn>
     <v-spacer />
+    <v-btn
+      icon
+      href="https://github.com/zisu-dev/status"
+      target="_blank"
+      rel="noopener"
+    >
+      <v-icon>{{ mdiGithub }}</v-icon>
+    </v-btn>
     <v-btn icon aria-label="settings" @click="settings = !settings">
       <v-icon>{{ mdiCog }}</v-icon>
     </v-btn>
@@ -26,7 +34,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mdiCog } from '@mdi/js'
+import { mdiCog, mdiGithub } from '@mdi/js'
 import { get, sync } from 'vuex-pathify'
 
 export default Vue.extend({
@@ -37,13 +45,14 @@ export default Vue.extend({
         up: '#2ecc71c0',
         down: '#e74c3cc0'
       },
-      mdiCog
+      mdiCog,
+      mdiGithub
     }
   },
   computed: {
     settings: sync('drawers@settings'),
     main: sync('drawers@main'),
-    globalInfo: get('globalInfo')
+    status: get('globalInfo@status')
   }
 })
 </script>
