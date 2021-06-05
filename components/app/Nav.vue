@@ -46,9 +46,7 @@ import {
   mdiCursorDefault,
   mdiEye,
   mdiHome,
-  mdiRecordCircleOutline,
-  mdiServer,
-  mdiWeb
+  mdiRecordCircleOutline
 } from '@mdi/js'
 import { sync } from 'vuex-pathify'
 
@@ -57,8 +55,6 @@ export default Vue.extend({
   data() {
     return {
       icons: {
-        server: mdiServer,
-        website: mdiWeb,
         Ping: mdiRecordCircleOutline,
         'HTTP(s)': mdiCursorDefault,
         default: mdiEye
