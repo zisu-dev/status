@@ -44,10 +44,22 @@ export default Vue.extend({
         this.theme === 1 ? 'dark' : 'light'
       )
       this.chart.setOption({
-        title: { text: 'Response Times' },
+        title: {
+          text: 'Response Times',
+          left: 'center',
+          textStyle: {
+            fontFamily:
+              "'Cascadia Code', 'Roboto Mono', 'Courier New', Courier, monospace",
+            fontSize: 12
+          }
+        },
         tooltip: { trigger: 'axis' },
+        grid: { top: 60, bottom: 20, left: 50, right: 20 },
         xAxis: { type: 'category', data: [] },
-        yAxis: { type: 'value', axisLabel: { formatter: '{value} ms' } },
+        yAxis: {
+          type: 'value',
+          axisLabel: { formatter: '{value} ms' }
+        },
         series: [
           {
             name: 'latency',

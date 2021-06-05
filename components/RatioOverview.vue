@@ -1,5 +1,16 @@
 <template>
-  <div class="text-center">
+  <div v-if="dense" class="d-flex flex-row align-center mx-1">
+    <v-icon :color="colors[ratioClass]">
+      {{ icons[ratioClass] }}
+    </v-icon>
+    <div class="text--primary text-caption">
+      <code>{{ ratioStr }}%</code>
+    </div>
+    <div class="text-caption text--secondary">
+      <code>({{ type }})</code>
+    </div>
+  </div>
+  <div v-else class="text-center">
     <v-icon :color="colors[ratioClass]">
       {{ icons[ratioClass] }}
     </v-icon>
@@ -31,6 +42,9 @@ export default Vue.extend({
     type: {
       type: String,
       required: true
+    },
+    dense: {
+      type: Boolean
     }
   },
   data: () => ({
