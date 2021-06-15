@@ -20,7 +20,7 @@
     "core-js": "^3.14.0",
     "echarts": "^5.1.2",
     "izitoast": "^1.4.0",
-    "nuxt": "^2.15.6",
+    "nuxt": "^2.15.7",
     "vuex-pathify": "^1.4.5"
   },
   "devDependencies": {
