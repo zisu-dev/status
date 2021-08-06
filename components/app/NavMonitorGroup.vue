@@ -8,7 +8,7 @@
       </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title class="text-monospace">
-          {{ titles[group.name] }}
+          {{ titles[group.name] || group.name }}
         </v-list-item-title>
       </v-list-item-content>
     </template>
@@ -63,8 +63,7 @@ export default Vue.extend({
         default: mdiEye
       },
       titles: {
-        srv: 'server',
-        site: 'site'
+        srv: 'server'
       },
       colors: {
         up: 'success',
