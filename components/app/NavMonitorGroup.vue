@@ -42,7 +42,7 @@ import {
   mdiEye,
   mdiRecordCircleOutline,
   mdiServer,
-  mdiWeb
+  mdiApplicationCog
 } from '@mdi/js'
 
 export default Vue.extend({
@@ -57,13 +57,14 @@ export default Vue.extend({
     return {
       icons: {
         srv: mdiServer,
-        site: mdiWeb,
+        app: mdiApplicationCog,
         Ping: mdiRecordCircleOutline,
         'HTTP(s)': mdiCursorDefault,
         default: mdiEye
       },
       titles: {
-        srv: 'server'
+        app: 'App',
+        srv: 'Server'
       },
       colors: {
         up: 'success',
