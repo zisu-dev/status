@@ -15,7 +15,7 @@
     "lint": "yarn lint:js"
   },
   "dependencies": {
-    "@mdi/js": "^6.6.96",
+    "@mdi/js": "^7.0.96",
     "@nuxtjs/axios": "^5.13.6",
     "core-js": "^3.21.1",
     "echarts": "^5.3.1",
